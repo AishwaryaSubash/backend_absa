@@ -1,8 +1,11 @@
 export class BodyDto {
-  product_id: String;
-  product_title: String;
-  product_categry: String;
-  rating: Number;
-  review: String;
-  summary: String;
+  product_id: string;
+  product_title: string;
+  product_category: string;
+  rating: number;
+  review: string;
+  summary: string;
+  date: string;
+  aspect_terms_sentiment: { aspect_term: string; sentiment_polarity: string }[];
+  overall_sentiment_polarity: { label: string; score: number };
 }

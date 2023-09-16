@@ -18,7 +18,7 @@ model ProductReview {
   rating          Int
   summary         String
   review          String
-  date            DateTime     @default(now())
+  date            String
   predictions     Predictions?
 }
 
@@ -27,5 +27,5 @@ model Predictions {
   pred_id                      String        @id @default(auto()) @map("_id") @db.ObjectId
   aspect_terms                 String[]
   aspect_sentiment_polarities  String[]
-  overall_sentiment_polarities String[]
+  overall_sentiment_polarities String
 }
