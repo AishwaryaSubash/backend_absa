@@ -122,7 +122,7 @@ export class AppService {
     const date = today.toLocaleDateString('en-US', options);
     console.log(date);
     const data = await axios
-      .post('http://650b-34-87-102-38.ngrok-free.app/generate', {
+      .post('https://1971-34-30-26-124.ngrok-free.app/generate', {
         inputs: body.review,
         parameters: {},
       })
@@ -137,7 +137,7 @@ export class AppService {
     const overall_sentiment_polarity = JSON.parse(
       data['overall_sentiment_polarity'],
     )[0];
-    return await this.prismaClient.productReview.create({
+     await this.prismaClient.productReview.create({
       data: {
         product_id: body.product_id,
         product_categry: body.product_category,
@@ -159,6 +159,7 @@ export class AppService {
         },
       },
     });
+    return await this.groupReviews(body.product_id)
   }
 }
 
