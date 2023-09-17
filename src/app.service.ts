@@ -54,15 +54,15 @@ export class AppService {
   }
   async groupReviews(product_id: string){
     try {
-      const res = await this.prismaClient.productReview.groupBy({
-        by: ['review', 'summary', 'date', 'id'],
-        where: {
-          product_id: product_id,
-        },
-        orderBy: {
-          date: 'desc',
-        },
-      });
+      // const res = await this.prismaClient.productReview.groupBy({
+      //   by: ['review', 'summary', 'date', 'id'],
+      //   where: {
+      //     product_id: product_id,
+      //   },
+      //   orderBy: {
+      //     date: 'desc',
+      //   },
+      // });
       const det = await this.prismaClient.productReview.findFirst({
         where: {
           product_id: product_id,
@@ -89,7 +89,7 @@ export class AppService {
       });
 
       const combinedData = {
-        reviews: res,
+        // reviews: res,
         predictions: predictions,
         details: det,
       };
