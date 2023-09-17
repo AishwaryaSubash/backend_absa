@@ -9,7 +9,7 @@ export class AppService {
 
   async postNew(body: BodyDto) {
     console.log(body);
-    await this.prismaClient.productReview.create({
+     await this.prismaClient.productReview.create({
       data: {
         product_id: body.product_id,
         product_categry: body.product_category,
@@ -31,6 +31,7 @@ export class AppService {
         },
       },
     });
+    return await this.groupReviews(body.product_id)
   }
 
   async getReview() {
@@ -122,7 +123,7 @@ export class AppService {
     const date = today.toLocaleDateString('en-US', options);
     console.log(date);
     const data = await axios
-      .post('https://1971-34-30-26-124.ngrok-free.app/generate', {
+      .post('https://d368-35-225-211-23.ngrok-free.app/generate', {
         inputs: body.review,
         parameters: {},
       })
