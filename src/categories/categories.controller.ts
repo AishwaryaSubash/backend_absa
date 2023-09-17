@@ -1,5 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
+import { CategoryFetch } from './dto/categ.dto';
 
 @Controller('categories')
 export class CategoriesController {
@@ -10,9 +11,8 @@ export class CategoriesController {
     return await this.categoriesService.findAllCategories();
   }
 
-  @Get('findAllProducts')
-  async findAllProducts() {
-    return await this.categoriesService.findAllProducts();
+  @Post('findAllProducts')
+  async findAllProducts(@Body() body: CategoryFetch) {
+    return await this.categoriesService.findAllProducts(body);
   }
-  
 }
