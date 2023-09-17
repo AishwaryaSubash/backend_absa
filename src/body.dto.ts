@@ -9,3 +9,12 @@ export class BodyDto {
   aspect_terms_sentiment: { aspect_term: string; sentiment_polarity: string }[];
   overall_sentiment_polarity: { label: string; score: number };
 }
+
+
+export class AddReview {
+  product_id: string;
+  product_title: string;
+  product_category: string;
+  review: string;
+  summary: string;
+}

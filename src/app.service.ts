@@ -1,6 +1,7 @@
 import { Get, Injectable, Post } from '@nestjs/common';
-import { BodyDto } from './body.dto';
+import { AddReview, BodyDto } from './body.dto';
 import { PrismaService } from './prisma/prisma.service';
+import axios from 'axios';
 
 @Injectable()
 export class AppService {
@@ -52,7 +53,7 @@ export class AppService {
 
     return data;
   }
-  async groupReviews(product_id: string){
+  async groupReviews(product_id: string) {
     try {
       // const res = await this.prismaClient.productReview.groupBy({
       //   by: ['review', 'summary', 'date', 'id'],
@@ -85,12 +86,12 @@ export class AppService {
           overall_sentiment_polarities: true,
           pred_id: true,
           product_review: {
-            select:{
-              review:true,
-              summary:true,
-              date:true,
-              id:true
-            }
+            select: {
+              review: true,
+              summary: true,
+              date: true,
+              id: true,
+            },
           },
         },
       });
@@ -104,6 +105,60 @@ export class AppService {
     } catch (error) {
       console.log('error');
     }
+  }
+
+  async addReview(body: AddReview) {
+    console.log(body);
+    const options: {
+      year: 'numeric';
+      month: 'short';
+      day: 'numeric';
+    } = {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    };
+    const today = new Date();
+    const date = today.toLocaleDateString('en-US', options);
+    console.log(date);
+    const data = await axios
+      .post('http://650b-34-87-102-38.ngrok-free.app/generate', {
+        inputs: body.review,
+        parameters: {},
+      })
+      .then(function (response) {
+        return response.data;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    console.log(data);
+    const aspect_terms_sentiment = JSON.parse(data['generated_text']);
+    const overall_sentiment_polarity = JSON.parse(
+      data['overall_sentiment_polarity'],
+    )[0];
+    return await this.prismaClient.productReview.create({
+      data: {
+        product_id: body.product_id,
+        product_categry: body.product_category,
+        product_title: body.product_title,
+        rating: 0,
+        review: body.review,
+        summary: body.summary,
+        date: date,
+        predictions: {
+          create: {
+            aspect_terms: aspect_terms_sentiment.map(
+              (item: { aspect_term: any; }) => item.aspect_term,
+            ),
+            aspect_sentiment_polarities: aspect_terms_sentiment.map(
+              (item: { sentiment_polarity: any; }) => item.sentiment_polarity,
+            ),
+            overall_sentiment_polarities: overall_sentiment_polarity.label,
+          },
+        },
+      },
+    });
   }
 }
 

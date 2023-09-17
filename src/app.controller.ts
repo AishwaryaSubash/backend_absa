@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { AppService } from './app.service';
-import { BodyDto } from './body.dto';
+import { AddReview, BodyDto } from './body.dto';
 
 @Controller('')
 export class AppController {
@@ -17,7 +17,13 @@ export class AppController {
   }
 
   @Get('groupReviews/:id')
-  groupReviews(@Param('id') product_id: string) {
-    return this.appService.groupReviews(product_id);
+  async groupReviews(@Param('id') product_id: string) {
+    return await this.appService.groupReviews(product_id);
   }
+
+  @Post('addReview')
+  async addReview(@Body() body: AddReview){
+    return await this.appService.addReview(body)
+  }
+
 }
