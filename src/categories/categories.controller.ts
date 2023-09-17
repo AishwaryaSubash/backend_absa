@@ -9,4 +9,10 @@ export class CategoriesController {
   async findAllCategories() {
     return await this.categoriesService.findAllCategories();
   }
+
+  @Get('findAllProducts')
+  async findAllProducts() {
+    return await this.categoriesService.findAllProducts();
+  }
+  
 }

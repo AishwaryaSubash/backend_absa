@@ -7,6 +7,12 @@ export class CategoriesService {
 
   async findAllCategories() {
     return await this.prismaService.productReview.groupBy({
+      by: ['product_categry'],
+    });
+  }
+
+  async findAllProducts() {
+    return await this.prismaService.productReview.groupBy({
       by: ['product_id', 'product_title'],
     });
   }
