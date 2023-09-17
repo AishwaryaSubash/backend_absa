@@ -6,6 +6,8 @@ export class CategoriesService {
   constructor(private prismaService: PrismaService) {}
 
   async findAllCategories() {
-    return await this.prismaService.productReview.findMany();
+    return await this.prismaService.productReview.groupBy({
+      by: ['product_id', 'product_title'],
+    });
   }
 }
