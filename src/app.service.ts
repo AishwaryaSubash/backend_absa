@@ -84,7 +84,14 @@ export class AppService {
           aspect_terms: true,
           overall_sentiment_polarities: true,
           pred_id: true,
-          product_review: true,
+          product_review: {
+            select:{
+              review:true,
+              summary:true,
+              date:true,
+              id:true
+            }
+          },
         },
       });
 
