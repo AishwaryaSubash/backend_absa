@@ -31,6 +31,17 @@ export class AppService {
         },
       },
     });
+    const data = await axios
+    .post('https://ccb5-34-125-186-149.ngrok-free.app/getReview', {
+      inputs: body,
+    })
+    .then(function (response) {
+      return response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  console.log(data);
     return await this.groupReviews(body.product_id)
   }
 
