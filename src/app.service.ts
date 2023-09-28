@@ -9,7 +9,7 @@ export class AppService {
 
   async postNew(body: BodyDto) {
     console.log(body);
-     await this.prismaClient.productReview.create({
+    await this.prismaClient.productReview.create({
       data: {
         product_id: body.product_id,
         product_categry: body.product_category,
@@ -31,8 +31,8 @@ export class AppService {
         },
       },
     });
-    
-    return await this.groupReviews(body.product_id)
+
+    return await this.groupReviews(body.product_id);
   }
 
   async getReview() {
@@ -74,6 +74,7 @@ export class AppService {
           product_title: true,
           product_categry: true,
           rating: true,
+          product_id: true,
         },
       });
       const predictions = await this.prismaClient.predictions.findMany({
@@ -139,7 +140,7 @@ export class AppService {
     const overall_sentiment_polarity = JSON.parse(
       data['overall_sentiment_polarity'],
     )[0];
-     await this.prismaClient.productReview.create({
+    await this.prismaClient.productReview.create({
       data: {
         product_id: body.product_id,
         product_categry: body.product_category,
@@ -151,17 +152,17 @@ export class AppService {
         predictions: {
           create: {
             aspect_terms: aspect_terms_sentiment.map(
-              (item: { aspect_term: any; }) => item.aspect_term,
+              (item: { aspect_term: any }) => item.aspect_term,
             ),
             aspect_sentiment_polarities: aspect_terms_sentiment.map(
-              (item: { sentiment_polarity: any; }) => item.sentiment_polarity,
+              (item: { sentiment_polarity: any }) => item.sentiment_polarity,
             ),
             overall_sentiment_polarities: overall_sentiment_polarity.label,
           },
         },
       },
     });
-    return await this.groupReviews(body.product_id)
+    return await this.groupReviews(body.product_id);
   }
 }
 
