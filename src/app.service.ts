@@ -31,17 +31,7 @@ export class AppService {
         },
       },
     });
-    const data = await axios
-    .post('https://ccb5-34-125-186-149.ngrok-free.app/getReview', {
-      inputs: body,
-    })
-    .then(function (response) {
-      return response.data;
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  console.log(data);
+    
     return await this.groupReviews(body.product_id)
   }
 
@@ -134,7 +124,7 @@ export class AppService {
     const date = today.toLocaleDateString('en-US', options);
     console.log(date);
     const data = await axios
-      .post('https://d368-35-225-211-23.ngrok-free.app/generate', {
+      .post('https://733e-35-233-223-26.ngrok-free.app/generate', {
         inputs: body.review,
         parameters: {},
       })
