@@ -76,6 +76,9 @@ export class AppService {
           rating: true,
           product_id: true,
         },
+        orderBy: {
+          date: 'asc',
+        },
       });
       const predictions = await this.prismaClient.predictions.findMany({
         where: {
