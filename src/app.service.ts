@@ -104,7 +104,7 @@ export class AppService {
         predictions: predictions,
         details: det,
       };
-      return combinedData;
+      return combinedData[0];
     } catch (error) {
       console.log('error');
     }
