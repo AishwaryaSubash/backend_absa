@@ -179,7 +179,7 @@ export class AppService {
     const date = today.toLocaleDateString('en-US', options);
     console.log(date);
     const data = await axios
-      .post('https://733e-35-233-223-26.ngrok-free.app/generate', {
+      .post('https://d8a1-35-233-172-142.ngrok-free.app/generate', {
         inputs: body.review,
         parameters: {},
       })
