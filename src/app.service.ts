@@ -66,7 +66,7 @@ export class AppService {
       //     date: 'desc',
       //   },
       // });
-      const det = await this.prismaClient.productReview.findFirst({
+      const det = await this.prismaClient.productReview.findMany({
         where: {
           product_id: product_id,
         },
@@ -101,8 +101,8 @@ export class AppService {
 
       const combinedData = {
         // reviews: res,
-        predictions: predictions,
-        details: det,
+        predictions: predictions.reverse()[0],
+        details: det.reverse()[0],
       };
       return predictions.reverse()[0];
     } catch (error) {
