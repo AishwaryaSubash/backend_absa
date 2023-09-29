@@ -66,6 +66,60 @@ export class AppService {
       //     date: 'desc',
       //   },
       // });
+      const det = await this.prismaClient.productReview.findFirst({
+        where: {
+          product_id: product_id,
+        },
+        select: {
+          product_title: true,
+          product_categry: true,
+          rating: true,
+          product_id: true,
+        },
+      });
+      const predictions = await this.prismaClient.predictions.findMany({
+        where: {
+          product_review: {
+            product_id: product_id,
+          },
+        },
+        select: {
+          aspect_sentiment_polarities: true,
+          aspect_terms: true,
+          overall_sentiment_polarities: true,
+          pred_id: true,
+          product_review: {
+            select: {
+              review: true,
+              summary: true,
+              date: true,
+              id: true,
+            },
+          },
+        },
+      });
+
+      const combinedData = {
+        // reviews: res,
+        predictions: predictions,
+        details: det,
+      };
+      return combinedData;
+    } catch (error) {
+      console.log('error');
+    }
+  }
+  async getOne(product_id: string) {
+    try {
+      // const res = await this.prismaClient.productReview.groupBy({
+      //   by: ['review', 'summary', 'date', 'id'],
+      //   where: {
+      //     product_id: product_id,
+      //   },
+      //   orderBy: {
+      //     date: 'desc',
+      //   },
+      // });
       const det = await this.prismaClient.productReview.findMany({
         where: {
           product_id: product_id,
@@ -104,7 +158,7 @@ export class AppService {
         predictions: predictions.reverse()[0],
         details: det.reverse()[0],
       };
-      return predictions.reverse()[0];
+      return combinedData;
     } catch (error) {
       console.log('error');
     }

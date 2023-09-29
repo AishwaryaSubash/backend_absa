@@ -20,6 +20,10 @@ export class AppController {
   async groupReviews(@Param('id') product_id: string) {
     return await this.appService.groupReviews(product_id);
   }
+  @Get('getOne/:id')
+  async getOne(@Param('id') product_id: string) {
+    return await this.appService.getOne(product_id);
+  }
 
   @Post('addReview')
   async addReview(@Body() body: AddReview){
