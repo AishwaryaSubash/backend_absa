@@ -104,7 +104,7 @@ export class AppService {
         predictions: predictions,
         details: det,
       };
-      return predictions[0];
+      return predictions.reverse()[0];
     } catch (error) {
       console.log('error');
     }
